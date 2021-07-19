@@ -38,10 +38,9 @@ public class ClockifyWebhook implements HttpFunction {
             new RateLimitFilter(),
             new ClockifySignatureFilter(),
             new ContentTypeFilter());
-    FirestoreProvider firestoreProvider;
+    private final FirestoreProvider firestoreProvider = new FirestoreProvider();
     private final Gson gson = new GsonBuilder().create();
-    private final java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {
-    }.getType();
+    private final java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {}.getType();
 
     public void service(HttpRequest request, HttpResponse response) {
         if (!AccessDecisionFilter.isOk(request, filters, log::warn, response::setStatusCode, response::setStatusCode)) {
