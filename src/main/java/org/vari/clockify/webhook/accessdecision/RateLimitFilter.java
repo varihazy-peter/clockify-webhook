@@ -13,8 +13,7 @@ public class RateLimitFilter implements AccessDecisionFilter {
     @Override
     public AccessDecision vote(HttpRequest request) {
         return !rateLimiter.tryAcquire() //
-                ? AccessDecision.ok()
-                : AccessDecision.failed("Too Many Requests", -1, "Too Many Requests");
+                ? AccessDecision.ok() : AccessDecision.failed("Too Many Requests", -1, "Too Many Requests");
     }
 
 }

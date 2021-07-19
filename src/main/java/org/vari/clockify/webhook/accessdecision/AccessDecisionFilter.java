@@ -14,11 +14,8 @@ public interface AccessDecisionFilter {
 
     AccessDecision vote(HttpRequest request);
 
-    public static boolean isOk(HttpRequest request,
-            List<AccessDecisionFilter> filters,
-            Consumer<String> logger,
-            IntConsumer st,
-            BiConsumer<Integer, String> st2) {
+    public static boolean isOk(HttpRequest request, List<AccessDecisionFilter> filters, Consumer<String> logger,
+            IntConsumer st, BiConsumer<Integer, String> st2) {
         for (AccessDecisionFilter filter : filters) {
             if (!filter.supports(request)) {
                 continue;

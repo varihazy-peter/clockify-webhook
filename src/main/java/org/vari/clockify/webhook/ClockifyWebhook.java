@@ -35,12 +35,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ClockifyWebhook implements HttpFunction {
     private final List<AccessDecisionFilter> filters = List.of( //
-            new RateLimitFilter(),
-            new ClockifySignatureFilter(),
-            new ContentTypeFilter());
+            new RateLimitFilter(), new ClockifySignatureFilter(), new ContentTypeFilter());
     private final FirestoreProvider firestoreProvider = new FirestoreProvider();
     private final Gson gson = new GsonBuilder().create();
-    private final java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {}.getType();
+    private final java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {
+    }.getType();
 
     public void service(HttpRequest request, HttpResponse response) {
         if (!AccessDecisionFilter.isOk(request, filters, log::warn, response::setStatusCode, response::setStatusCode)) {
