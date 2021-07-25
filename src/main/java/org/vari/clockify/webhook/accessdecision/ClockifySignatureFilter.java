@@ -1,11 +1,10 @@
 package org.vari.clockify.webhook.accessdecision;
 
+import com.google.cloud.functions.HttpRequest;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.google.cloud.functions.HttpRequest;
 
 public class ClockifySignatureFilter implements AccessDecisionFilter {
     public static final String CLOCKIFY_SIGNATURE_HEADER_NAME = "Clockify-Signature";

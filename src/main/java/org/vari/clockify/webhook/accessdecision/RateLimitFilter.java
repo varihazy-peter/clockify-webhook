@@ -2,7 +2,6 @@ package org.vari.clockify.webhook.accessdecision;
 
 import com.google.cloud.functions.HttpRequest;
 import com.google.common.util.concurrent.RateLimiter;
-
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
@@ -12,8 +11,9 @@ public class RateLimitFilter implements AccessDecisionFilter {
 
     @Override
     public AccessDecision vote(HttpRequest request) {
-        return !rateLimiter.tryAcquire() //
-                ? AccessDecision.ok() : AccessDecision.failed("Too Many Requests", -1, "Too Many Requests");
+        return rateLimiter.tryAcquire() //
+                ? AccessDecision.ok() //
+                : AccessDecision.failed("Too Many Requests", 429, "Too Many Requests");
     }
 
 }

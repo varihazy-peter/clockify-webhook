@@ -28,6 +28,6 @@ public class AccessDecision {
     }
 
     public static AccessDecision failed(@NonNull String logMessage, int httpCode, String httpMessage) {
-        return new AccessDecision(1, new Reason(logMessage, httpCode, httpMessage));
+        return new AccessDecision(-1, new Reason(logMessage, httpCode, httpMessage));
     }
 }

@@ -1,0 +1,77 @@
+{
+	"costRate": null,
+	"description": "description",
+	"project": {
+		"template": false,
+		"note": "",
+		"clientId": "",
+		"color": "#b2bf5e",
+		"clientName": "",
+		"activeEstimate": "NONE",
+		"billable": true,
+		"timeEstimate": {
+			"estimate": 0.0,
+			"type": "AUTO",
+			"resetOption": null
+		},
+		"duration": "PT0S",
+		"archived": false,
+		"public": true,
+		"budgetEstimate": null,
+		"name": "Seiko Support v2.0",
+		"estimate": {
+			"estimate": "PT0S",
+			"type": "AUTO"
+		},
+		"id": "projectId",
+		"workspaceId": "workspaceId"
+	},
+	"userId": "userId",
+	"billable": true,
+	"tags": [
+		{
+			"archived": false,
+			"name": "Support",
+			"id": "5fb7b5d6086bdf5591cc3494",
+			"workspaceId": "workspaceId"
+		},
+		{
+			"archived": false,
+			"name": "Development Task",
+			"id": "60a7942a7452030cc0544f0e",
+			"workspaceId": "workspaceId"
+		}
+	],
+	"task": {
+		"costRate": null,
+		"userGroupIds": [],
+		"billable": true,
+		"assigneeId": "",
+		"duration": "PT0S",
+		"budgetEstimate": 0.0,
+		"name": "SSV0-49",
+		"estimate": "PT0S",
+		"id": "60cd1ef9b144fe689c545cc9",
+		"hourlyRate": null,
+		"projectId": "60a793ea66b2876ad493ab96",
+		"assigneeIds": [],
+		"workspaceId": "5f9ecf053a1dc508bbb0caa9",
+		"status": "ACTIVE"
+	},
+	"customFieldValues": [],
+	"isLocked": true,
+	"timeInterval": {
+		"duration": "PT23M31S",
+		"start": "2021-06-30T22:07:36Z",
+		"end": "2021-06-30T22:31:07Z"
+	},
+	"id": "testId",
+	"hourlyRate": null,
+	"projectId": "projectId",
+	"user": {
+		"name": "Roland Kruska",
+		"id": "userId",
+		"status": "ACTIVE"
+	},
+	"workspaceId": "workspaceId"
+}
