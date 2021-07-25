@@ -23,12 +23,15 @@ public class TimeEntryEventParser {
     java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {
     }.getType();
     public final static String VALIDATED_AT_KEY = "__validatedAt";
+    public final static String RECEIVED_AT_KEY = "__receivedAt";
 
     public TimeEntryEvent parse(HttpRequest request) throws ApiException {
+        Instant receivedAt = Instant.now();
         Map<String, Object> jsonMap = this.parseBody(request);
         Map<String, Object> map = new HashMap<>(jsonMap.size() + 1);
         map.putAll(jsonMap);
         map.put(VALIDATED_AT_KEY, null);
+        map.put(RECEIVED_AT_KEY, receivedAt);
         String id = timeEntryId(jsonMap);
         return new TimeEntryEvent(Instant.now(), id, jsonMap);
     }
