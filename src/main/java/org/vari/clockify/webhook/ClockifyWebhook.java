@@ -4,7 +4,7 @@ import com.google.cloud.functions.HttpFunction;
 import com.google.cloud.functions.HttpRequest;
 import com.google.cloud.functions.HttpResponse;
 import org.vari.clockify.webhook.accessdecision.AccessControll;
-import org.vari.clockify.webhook.domain.TimeEntryEvent;
+import org.vari.clockify.webhook.domain.ClockifyEvent;
 
 public class ClockifyWebhook implements HttpFunction {
     private final AccessControll filters = new AccessControll();
@@ -15,7 +15,7 @@ public class ClockifyWebhook implements HttpFunction {
         if (filters.isFailed(request, response)) {
             return;
         }
-        TimeEntryEvent event = parser.parse(request);
+        ClockifyEvent event = parser.parse(request);
         if (event == null || event.getData() == null || event.getData().size() == 0) {
             response.setStatusCode(java.net.HttpURLConnection.HTTP_BAD_REQUEST);
             return;

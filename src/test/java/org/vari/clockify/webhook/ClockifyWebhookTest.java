@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.vari.clockify.webhook.domain.TimeEntryEvent;
+import org.vari.clockify.webhook.domain.ClockifyEvent;
 
 @Slf4j
 class ClockifyWebhookTest extends AbstractInterationTest {
@@ -32,7 +32,7 @@ class ClockifyWebhookTest extends AbstractInterationTest {
         log.info("readed json: {}", originalDate);
         com.google.cloud.functions.HttpRequest httpRequest = requestBuilder.body(body).build();
         new ClockifyWebhook().service(httpRequest, Mockito.mock(com.google.cloud.functions.HttpResponse.class));
-        DocumentSnapshot document = firestore.collection(TimeEntryEvent.TIME_ENTRY_COLLECTION).document(id).get().get();
+        DocumentSnapshot document = firestore.collection(ClockifyEvent.TIME_ENTRY_COLLECTION).document(id).get().get();
         Assertions.assertEquals(originalDate, document.getData());
         log.info("data: {}", document.getData());
     }

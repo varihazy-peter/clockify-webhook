@@ -10,30 +10,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.vari.clockify.webhook.domain.TimeEntryEvent;
+import org.vari.clockify.webhook.domain.ClockifyEvent;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TimeEntryEventParser {
     Gson gson = new GsonBuilder().create();
     java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {
     }.getType();
-    public final static String VALIDATED_AT_KEY = "__validatedAt";
-    public final static String RECEIVED_AT_KEY = "__receivedAt";
 
-    public TimeEntryEvent parse(HttpRequest request) throws ApiException {
-        Instant receivedAt = Instant.now();
+    public ClockifyEvent parse(HttpRequest request) throws ApiException {
         Map<String, Object> jsonMap = this.parseBody(request);
-        Map<String, Object> map = new HashMap<>(jsonMap.size() + 1);
-        map.putAll(jsonMap);
-        map.put(VALIDATED_AT_KEY, null);
-        map.put(RECEIVED_AT_KEY, receivedAt);
         String id = timeEntryId(jsonMap);
-        return new TimeEntryEvent(Instant.now(), id, jsonMap);
+        return new ClockifyEvent(Instant.now(), id, jsonMap);
     }
 
     private Map<String, Object> parseBody(HttpRequest request) {

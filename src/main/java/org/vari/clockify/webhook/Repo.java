@@ -14,7 +14,7 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.vari.clockify.webhook.domain.TimeEntryEvent;
+import org.vari.clockify.webhook.domain.ClockifyEvent;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -23,8 +23,8 @@ public class Repo {
 
     Firestore firestore = firestoreOptions.getService();
 
-    public WriteResult saveClockifyEvent(@NonNull TimeEntryEvent event) {
-        CollectionReference coll = firestore.collection(TimeEntryEvent.CLOCKIFY_EVENT_COLLECTION);
+    public WriteResult saveClockifyEvent(@NonNull ClockifyEvent event) {
+        CollectionReference coll = firestore.collection(ClockifyEvent.CLOCKIFY_EVENT_COLLECTION);
         String dt = LocalDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_DATE_TIME);
         String idd = event.getId() + "_" + dt + "_" + UUID.randomUUID();
         DocumentReference doc = coll.document(idd);
@@ -34,10 +34,10 @@ public class Repo {
         return writeResult;
     }
 
-    public WriteResult saveTimeEntry(@NonNull TimeEntryEvent event) {
-        CollectionReference coll = firestore.collection(TimeEntryEvent.TIME_ENTRY_COLLECTION);
+    public WriteResult saveTimeEntry(@NonNull ClockifyEvent event) {
+        CollectionReference coll = firestore.collection(ClockifyEvent.TIME_ENTRY_COLLECTION);
         DocumentReference doc = coll.document(event.getId());
-        WriteResult af = Try.of(doc.set(event.getData())::get).get();
+        WriteResult af = Try.of(doc.set(event.timeEntryData())::get).get();
         log.debug("TimeEntry id:{}, saved at: {}, data: {}", event.getId(), af.getUpdateTime(), event.getData());
         log.info("TimeEntry id:{}, saved at: {}", event.getId(), af.getUpdateTime());
         return af;
