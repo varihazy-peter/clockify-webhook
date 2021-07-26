@@ -1,10 +1,8 @@
 package org.vari.clockify.webhook.domain;
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.collect.ImmutableMap;
-
 import lombok.NonNull;
 import lombok.Value;
 
@@ -23,10 +21,10 @@ public class ClockifyEvent {
     public final static String RECEIVED_AT_KEY = "__receivedAt";
 
     public Map<String, Object> timeEntryData() {
-        return ImmutableMap.<String, Object> builderWithExpectedSize(data.size() + 2) //
-                .putAll(data) //
-                .put(VALIDATED_AT_KEY, null) //
-                .put(RECEIVED_AT_KEY, Instant.now().toString()) //
-                .build();
+        Map<String, Object> ret = new HashMap<>(data.size() + 2);
+        ret.putAll(data);
+        ret.put(VALIDATED_AT_KEY, null); //
+        ret.put(RECEIVED_AT_KEY, eventTime.toString()); //
+        return ret;
     }
 }

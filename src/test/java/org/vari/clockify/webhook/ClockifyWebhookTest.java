@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,6 @@ import org.vari.clockify.webhook.domain.ClockifyEvent;
 
 @Slf4j
 class ClockifyWebhookTest extends AbstractInterationTest {
-    public final Firestore firestore = FirestoreOptions.getDefaultInstance().toBuilder().build().getService();
-
     public final Gson gson = new GsonBuilder().create();
     public final java.lang.reflect.Type type = new TypeToken<Map<String, Object>>() {
     }.getType();
@@ -32,8 +31,12 @@ class ClockifyWebhookTest extends AbstractInterationTest {
         log.info("readed json: {}", originalDate);
         com.google.cloud.functions.HttpRequest httpRequest = requestBuilder.body(body).build();
         new ClockifyWebhook().service(httpRequest, Mockito.mock(com.google.cloud.functions.HttpResponse.class));
+        Firestore firestore = FirestoreOptions.getDefaultInstance().toBuilder().build().getService();
         DocumentSnapshot document = firestore.collection(ClockifyEvent.TIME_ENTRY_COLLECTION).document(id).get().get();
-        Assertions.assertEquals(originalDate, document.getData());
-        log.info("data: {}", document.getData());
+        var map = new HashMap<>(document.getData());
+        map.remove(ClockifyEvent.RECEIVED_AT_KEY);
+        map.remove(ClockifyEvent.VALIDATED_AT_KEY);
+        Assertions.assertEquals(originalDate, map);
+        log.info("data: {}", map);
     }
 }
