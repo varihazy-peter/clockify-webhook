@@ -45,6 +45,7 @@ public class ClockifyEvent {
         if (!(timeInterval instanceof Map)) {
             throw new IllegalStateException("timeInterval must be Map");
         }
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         Map<String, String> timeIntervalMap = (Map) timeInterval;
         if (!timeIntervalMap.containsKey("start")) {
             throw new IllegalStateException("Cannot find timeInterval.start");
