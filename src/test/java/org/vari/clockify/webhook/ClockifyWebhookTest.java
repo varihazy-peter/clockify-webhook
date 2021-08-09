@@ -34,8 +34,7 @@ class ClockifyWebhookTest extends AbstractInterationTest {
         Firestore firestore = FirestoreOptions.getDefaultInstance().toBuilder().build().getService();
         DocumentSnapshot document = firestore.collection(ClockifyEvent.TIME_ENTRY_COLLECTION).document(id).get().get();
         var map = new HashMap<>(document.getData());
-        map.remove(ClockifyEvent.RECEIVED_AT_KEY);
-        map.remove(ClockifyEvent.VALIDATED_AT_KEY);
+        map.remove(ClockifyEvent.VALIDATION_DATA_KEY);
         Assertions.assertEquals(originalDate, map);
         log.info("data: {}", map);
     }
